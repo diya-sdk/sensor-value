@@ -1,0 +1,43 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../sensor-base/sensor-base.html">
+
+<polymer-element name="sensor-value" attributes="icon" extends="sensor-base">
+	<template>
+		<style>
+			:host{
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: center;
+
+				font-size: 1.7em;
+
+				overflow: hidden;
+			}
+
+			p#label{
+				margin: 0px;
+				margin-bottom: 20px;
+				font-size: 2em;
+				color: white;
+				text-shadow: 2px 2px #000;
+			}
+
+
+		</style>
+
+		<p id="label">{{label}}</p>
+		<p id="value">{{value}} {{unit}}</p>
+
+	</template>
+	<script>
+		Polymer({
+
+			leafCount: 4,
+
+			ready: function(){
+				this.super();
+			}
+		})
+	</script>
+</polymer-element>
