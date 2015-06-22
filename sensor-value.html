@@ -1,13 +1,13 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../sensor-base/sensor-base.html">
 
-<polymer-element name="sensor-value" attributes="icon" extends="sensor-base">
+<polymer-element name="sensor-value" attributes="icon mini" extends="sensor-base">
 	<template>
 		<style>
 			:host{
 				display: flex;
 				flex-direction: row;
-				justify-content: space-between;
+				justify-content: center;
 				align-items: center;
 
 				font-size: 1.7em;
@@ -15,7 +15,7 @@
 				overflow: hidden;
 			}
 
-			p#label{
+			p#minilabel{
 				margin: 0px;
 				margin-bottom: 20px;
 				font-size: 2em;
@@ -23,7 +23,7 @@
 				text-shadow: 2px 2px #000;
 			}
 
-			div#value{
+			div#minivalue{
 				width: 110px;
 				height: 110px;
 				text-align: center;
@@ -35,18 +35,52 @@
 				text-shadow: 1px 1px #000;
 			}
 
+			#icon{
+				display: block;
+				width: 220px;
+				height: 220px;
+			}
+
+			#value{
+				display: flex;
+				flex-direction: column;
+				color: white;
+				text-shadow: 1px 1px #000;
+			}
+
+			#value h1{
+				margin-bottom: 0px;
+			}
+
+			#value p{
+				margin: 5px;
+				font-size: 2em;
+			}
+
+
 
 		</style>
 
-		<p id="label">{{label}}</p>
-		<div id="value" style="background-image: url('bower_components/sensor-value/icons/{{name}}.png')">
-			<p>{{value}} {{unit}}<p>
-		</div>
+		<template if="{{mini}}">
+			<p id="minilabel">{{label}}</p>
+			<div id="minivalue" style="background-image: url('bower_components/sensor-value/icons/{{name}}.png')">
+				<p>{{value}} {{unit}}<p>
+			</div>
+		</template>
+
+		<template if="{{!mini}}">
+			<img id="icon" src="bower_components/sensor-value/icons/{{name}}.png" />
+			<div id="value">
+				<h1>{{label}}</h1>
+				<p>{{value}} {{unit}}</p>
+			</div>
+		</template>
 
 	</template>
 	<script>
 		Polymer({
 
+			mini: false,
 			leafCount: 4,
 
 			ready: function(){
