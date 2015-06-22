@@ -23,11 +23,25 @@
 				text-shadow: 2px 2px #000;
 			}
 
+			div#value{
+				width: 110px;
+				height: 110px;
+				text-align: center;
+
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				color: white;
+				text-shadow: 1px 1px #000;
+			}
+
 
 		</style>
 
 		<p id="label">{{label}}</p>
-		<p id="value">{{value}} {{unit}}</p>
+		<div id="value" style="background-image: url('bower_components/sensor-value/icons/{{name}}.png')">
+			<p>{{value}} {{unit}}<p>
+		</div>
 
 	</template>
 	<script>
