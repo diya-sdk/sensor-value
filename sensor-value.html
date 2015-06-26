@@ -1,13 +1,14 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../sensor-base/sensor-base.html">
+<link rel="import" href="../leaf-scale/leaf-scale.html">
 
-<polymer-element name="sensor-value" attributes="icon mini" extends="sensor-base">
+<polymer-element name="sensor-value" attributes="icon qualityScale mini" extends="sensor-base">
 	<template>
 		<style>
 			:host{
 				display: flex;
 				flex-direction: row;
-			
+
 				align-items: center;
 
 				font-size: 1.7em;
@@ -24,9 +25,11 @@
 			}
 
 			div#minivalue{
-				width: 110px;
+				width: 150px;
 				height: 110px;
 				text-align: center;
+				background-repeat: no-repeat;
+				background-position: center;
 
 				display: flex;
 				justify-content: center;
@@ -37,7 +40,6 @@
 
 			#icon{
 				display: block;
-				width: 220px;
 				height: 220px;
 			}
 
@@ -58,22 +60,48 @@
 				font-size: 2em;
 			}
 
+			#big{
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+			}
+
+			#sensor{
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			leaf-scale{
+				border-top: 1px solid lightgray;
+				padding-top: 20px;
+				margin-top: 20px;
+			}
 
 
 		</style>
 
 		<template if="{{mini}}">
 			<p id="minilabel">{{label}}</p>
-			<div id="minivalue" style="background-image: url('bower_components/sensor-value/icons/{{name}}.png')">
+			<div id="minivalue" style="background-image: url('bower_components/sensor-value/icons/{{icon?icon:name}}.png')">
 				<p>{{value}} {{unit}}<p>
 			</div>
 		</template>
 
 		<template if="{{!mini}}">
-			<img id="icon" src="bower_components/sensor-value/icons/{{name}}.png" />
-			<div id="value">
-				<h1>{{label}}</h1>
-				<p>{{value}} {{unit}}</p>
+			<div id="big">
+				<div id="sensor">
+					<img id="icon" src="bower_components/sensor-value/icons/{{icon?icon:name}}Big.png" />
+					<div id="value">
+						<h1>{{label}}</h1>
+						<p>{{value}} {{unit}}</p>
+					</div>
+				</div>
+				<template if="{{qualityScale}}">
+					{{quality}}
+					<leaf-scale id="scale" leafCount="3" level="{{quality}}"></leaf-scale>
+				</template>
 			</div>
 		</template>
 
@@ -83,9 +111,16 @@
 
 			mini: false,
 			leafCount: 4,
+			icon: null,
+			qualityScale: false,
 
 			ready: function(){
 				this.super();
+				var scale = this.shadowRoot.querySelector('leaf-scale');
+
+				if(scale){
+					scale.setLevel(3);
+				}
 			}
 		})
 	</script>
