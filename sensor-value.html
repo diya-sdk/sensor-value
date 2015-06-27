@@ -2,7 +2,7 @@
 <link rel="import" href="../sensor-base/sensor-base.html">
 <link rel="import" href="../leaf-scale/leaf-scale.html">
 
-<polymer-element name="sensor-value" attributes="icon qualityScale mini" extends="sensor-base">
+<polymer-element name="sensor-value" attributes="icon qualityScale leafCount mini" extends="sensor-base">
 	<template>
 		<style>
 			:host{
@@ -99,7 +99,7 @@
 					</div>
 				</div>
 				<template if="{{qualityScale}}">
-					<leaf-scale id="scale" leafCount="3" level="{{quality*leafCount}}"></leaf-scale>
+					<leaf-scale id="scale" leafCount="{{leafCount}}" level="{{computeQuality(quality)}}"></leaf-scale>
 				</template>
 			</div>
 		</template>
@@ -109,8 +109,8 @@
 		Polymer({
 
 			mini: false,
-			leafCount: 4,
 			icon: null,
+			leafCount: 3,
 			qualityScale: false,
 
 			ready: function(){
@@ -120,6 +120,10 @@
 				if(scale){
 					scale.setLevel(3);
 				}
+			},
+
+			computeQuality: function(quality){
+				return Math.floor(quality*this.leafCount);
 			}
 		})
 	</script>
