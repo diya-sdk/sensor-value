@@ -2,9 +2,12 @@
 <link rel="import" href="../sensor-base/sensor-base.html">
 <link rel="import" href="../leaf-scale/leaf-scale.html">
 
-<polymer-element name="sensor-value" attributes="icon qualityScale leafCount mini" extends="sensor-base">
-	<template>
-		<style>
+<!--
+    TODO(polyup): Inheriting from other custom elements is not yet supported.
+    See: https://www.polymer-project.org/1.0/docs/migration.html#inheritance
+ -->
+<dom-module id="sensor-value">
+  <style>
 			:host{
 				display: flex;
 				flex-direction: row;
@@ -81,50 +84,72 @@
 
 
 		</style>
+  <template>
 
-		<template if="{{mini}}">
+		<template is="dom-if" if="{{mini}}">
 			<p id="minilabel">{{label}}</p>
-			<div id="minivalue" style="background-image: url('bower_components/sensor-value/icons/{{icon?icon:name}}.png')">
-				<p>{{value}} {{unit}}<p>
-			</div>
+			<div id="minivalue" style$="{{_computeStyle(icon, name)}}">
+				<p><span>{{value}}</span> <span>{{unit}}</span></p><p>
+			</p></div>
 		</template>
 
-		<template if="{{!mini}}">
+		<template is="dom-if" if="{{!mini}}">
 			<div id="big">
 				<div id="sensor">
-					<img id="icon" src="bower_components/sensor-value/icons/{{icon?icon:name}}Big.png" />
+					<img id="icon" src="{{_computeSrc(icon, name)}}">
 					<div id="value">
 						<h1>{{label}}</h1>
-						<p>{{value}} {{unit}}</p>
+						<p><span>{{value}}</span> <span>{{unit}}</span></p>
 					</div>
 				</div>
-				<template if="{{qualityScale}}">
-					<leaf-scale id="scale" leafCount="{{leafCount}}" level="{{computeQuality(quality)}}"></leaf-scale>
+				<template is="dom-if" if="{{qualityScale}}">
+					<leaf-scale id="scale" leafcount="{{leafCount}}" level="{{computeQuality(quality)}}"></leaf-scale>
 				</template>
 			</div>
 		</template>
 
 	</template>
-	<script>
-		Polymer({
-
-			mini: false,
-			icon: null,
-			leafCount: 3,
-			qualityScale: false,
-
-			ready: function(){
-				this.super();
-				var scale = this.shadowRoot.querySelector('leaf-scale');
-
-				if(scale){
-					scale.setLevel(3);
-				}
-			},
-
-			computeQuality: function(quality){
-				return Math.floor(quality*this.leafCount);
-			}
-		})
-	</script>
-</polymer-element>
+  <script>
+    Polymer({
+      is: 'sensor-value',
+      properties: {
+        icon: {
+          value: null,
+          notify: true
+        },
+        leafCount: {
+          type: Number,
+          value: 3,
+          notify: true
+        },
+        mini: {
+          type: Boolean,
+          value: false,
+          notify: true
+        },
+        qualityScale: {
+          type: Boolean,
+          value: false,
+          notify: true
+        }
+      },
+      ready: function () {
+        this.super();
+        var scale = Polymer.dom(this.shadowRoot).querySelector('leaf-scale');
+        if (scale) {
+          scale.setLevel(3);
+        }
+      },
+      computeQuality: function (quality) {
+        return Math.floor(quality * this.leafCount);
+      },
+      extends: 'sensor-base',
+      _computeStyle: function (icon, name) {
+        return 'background-image: url(\'bower_components/sensor-value/icons/' + icon ? icon : name + '.png\')';
+      },
+      _computeSrc: function (icon, name) {
+        return 'bower_components/sensor-value/icons/' + icon ? icon : name + 'Big.png';
+      }
+    });
+  </script>
+</dom-module>
