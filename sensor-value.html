@@ -110,46 +110,46 @@
 
 	</template>
   <script>
-    Polymer({
-      is: 'sensor-value',
-      properties: {
-        icon: {
-          value: null,
-          notify: true
-        },
-        leafCount: {
-          type: Number,
-          value: 3,
-          notify: true
-        },
-        mini: {
-          type: Boolean,
-          value: false,
-          notify: true
-        },
-        qualityScale: {
-          type: Boolean,
-          value: false,
-          notify: true
-        }
-      },
-      ready: function () {
-        this.super();
-        var scale = Polymer.dom(this.shadowRoot).querySelector('leaf-scale');
-        if (scale) {
-          scale.setLevel(3);
-        }
-      },
-      computeQuality: function (quality) {
-        return Math.floor(quality * this.leafCount);
-      },
-      extends: 'sensor-base',
-      _computeStyle: function (icon, name) {
-        return 'background-image: url(\'bower_components/sensor-value/icons/' + icon ? icon : name + '.png\')';
-      },
-      _computeSrc: function (icon, name) {
-        return 'bower_components/sensor-value/icons/' + icon ? icon : name + 'Big.png';
-      }
-    });
+	Polymer({
+		is: 'sensor-value',
+		properties: {
+			icon: {
+				value: null,
+				notify: true
+			},
+			leafCount: {
+				type: Number,
+				value: 3,
+				notify: true
+			},
+			mini: {
+				type: Boolean,
+				value: false,
+				notify: true
+			},
+			qualityScale: {
+				type: Boolean,
+				value: false,
+				notify: true
+			}
+		},
+		behaviors:[DiyaBehaviors.SensorBase],
+		ready: function () {
+			this.super();
+			var scale = Polymer.dom(this.shadowRoot).querySelector('leaf-scale');
+			if (scale) {
+				scale.setLevel(3);
+			}
+		},
+		computeQuality: function (quality) {
+			return Math.floor(quality * this.leafCount);
+		},
+		_computeStyle: function (icon, name) {
+			return 'background-image: url(\'bower_components/sensor-value/icons/' + icon ? icon : name + '.png\')';
+		},
+		_computeSrc: function (icon, name) {
+			return 'bower_components/sensor-value/icons/' + icon ? icon : name + 'Big.png';
+		}
+	});
   </script>
 </dom-module>
