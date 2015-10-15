@@ -109,7 +109,8 @@
 		</template>
 
 	</template>
-  <script>
+</dom-module>
+<script>
 	Polymer({
 		is: 'sensor-value',
 		properties: {
@@ -135,7 +136,6 @@
 		},
 		behaviors:[DiyaBehaviors.SensorBase],
 		ready: function () {
-			this.super();
 			var scale = Polymer.dom(this.shadowRoot).querySelector('leaf-scale');
 			if (scale) {
 				scale.setLevel(3);
@@ -151,5 +151,4 @@
 			return 'bower_components/sensor-value/icons/' + icon ? icon : name + 'Big.png';
 		}
 	});
-  </script>
-</dom-module>
+</script>
