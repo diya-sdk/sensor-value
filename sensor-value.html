@@ -6,13 +6,17 @@
   <style>
 			:host{
 				display: flex;
-				flex-direction: row;
-
+				flex-direction: column;
 				align-items: center;
-
 				font-size: 1.7em;
-
 				overflow: hidden;
+			}
+
+			div#mini{
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				width: 100%;
 			}
 
 			p#minilabel{
@@ -82,29 +86,35 @@
 		</style>
   <template>
 
-		<template is="dom-if" if="{{mini}}">
-			<p id="minilabel">{{label}}</p>
-			<div id="minivalue" style$="{{_computeStyle(icon, name)}}">
-				<p><span>{{value}}</span> <span>{{unit}}</span></p><p>
-			</p></div>
+	<template is="dom-if" if="{{mini}}">
+	  <div id="mini">
+		<p id="minilabel">{{label}}</p>
+		<div id="minivalue" style$="{{_computeStyle(icon, name)}}">
+		  <p><span>{{value}}</span> <span>{{unit}}</span></p><p>
+		</p></div>
+		<template is="dom-if" if="{{qualityScale}}">
+		  <leaf-scale id="scale" leafcount="{{leafCount}}" level="{{computeQuality(quality)}}">
+		  </leaf-scale>
 		</template>
-
-		<template is="dom-if" if="{{!mini}}">
-			<div id="big">
-				<div id="sensor">
-					<img id="icon" src$="{{_computeSrc(icon, name)}}">
-					<div id="value">
-						<h1>{{label}}</h1>
-						<p><span>{{value}}</span> <span>{{unit}}</span></p>
-					</div>
-				</div>
-				<template is="dom-if" if="{{qualityScale}}">
-					<leaf-scale id="scale" leafcount="{{leafCount}}" level="{{computeQuality(quality)}}"></leaf-scale>
-				</template>
-			</div>
-		</template>
-
+	  </div>
 	</template>
+
+	<template is="dom-if" if="{{!mini}}">
+	  <div id="big">
+		<div id="sensor">
+		  <img id="icon" src$="{{_computeSrc(icon, name)}}">
+		  <div id="value">
+			<h1>{{label}}</h1>
+			<p><span>{{value}}</span> <span>{{unit}}</span></p>
+		  </div>
+		</div>
+		<template is="dom-if" if="{{qualityScale}}">
+		  <leaf-scale id="scale" leafcount="{{leafCount}}" level="{{computeQuality(quality)}}"></leaf-scale>
+		</template>
+	  </div>
+	</template>
+
+  </template>
 </dom-module>
 <script>
 	Polymer({
@@ -132,6 +142,16 @@
 				type: Boolean,
 				value: false,
 				notify: true
+			},
+			width: {
+				type: Number,
+				value: 150,
+				notify: true
+			},
+			height: {
+				type: Number,
+				value: 110,
+				notify: true
 			}
 		},
 		behaviors:[DiyaBehaviors.SensorBase],
@@ -145,9 +165,13 @@
 			return Math.floor(quality * this.leafCount);
 		},
 		_computeStyle: function (icon, name) {
+			if(!icon && !name)
+				return null;
 			return 'background-image: url(\'bower_components/sensor-value/icons/' + (icon ? icon : name) + '.png\')';
 		},
 		_computeSrc: function (icon, name) {
+			if(!icon && !name)
+				return null;
 			return 'bower_components/sensor-value/icons/'+(icon ? icon : name)+'Big.png';
 		}
 	});
