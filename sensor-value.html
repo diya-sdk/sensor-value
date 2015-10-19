@@ -6,18 +6,13 @@
   <style>
 			:host{
 				display: flex;
-				flex-direction: column;
+				flex-direction: row;
 				align-items: center;
 				font-size: 1.7em;
 				overflow: hidden;
 			}
 
-			div#mini{
-				display: flex;
-				flex-direction: row;
-				align-items: center;
-				width: 100%;
-			}
+
 
 			p#minilabel{
 				margin: 0px;
@@ -87,16 +82,15 @@
   <template>
 
 	<template is="dom-if" if="{{mini}}">
-	  <div id="mini">
-		<p id="minilabel">{{label}}</p>
-		<div id="minivalue" style$="{{_computeStyle(icon, name)}}">
-		  <p><span>{{value}}</span> <span>{{unit}}</span></p><p>
-		</p></div>
-		<template is="dom-if" if="{{qualityScale}}">
-		  <leaf-scale id="scale" leafcount="{{leafCount}}" level="{{computeQuality(quality)}}">
-		  </leaf-scale>
-		</template>
+	  <p id="minilabel">{{label}}</p>
+	  <div id="minivalue" style$="{{_computeStyle(icon, name)}}">
+		<p><span>{{value}}</span> <span>{{unit}}</span></p><p>
+		</p>
 	  </div>
+	  <template is="dom-if" if="{{qualityScale}}">
+		<leaf-scale id="scale" leafcount="{{leafCount}}" level="{{computeQuality(quality)}}">
+		</leaf-scale>
+	  </template>
 	</template>
 
 	<template is="dom-if" if="{{!mini}}">
