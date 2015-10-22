@@ -42,7 +42,7 @@
 			#icon{
 				display: block;
 				max-height: 100%;
-				max-width: 20%;
+				max-width: 35%;
 			}
 
 			#value{
@@ -50,8 +50,10 @@
 				flex-direction: column;
 				color: white;
 				text-shadow: 1px 1px #000;
-				width: 80%;
-				height: 100%;
+				max-width: 65%;
+				max-height: 100%;
+				width: auto;
+				height: auto;
 			}
 
 			#value h1{
@@ -82,17 +84,15 @@
 				height: 100%;
 				width: 100%;
 			}
-
-			leaf-scale{
+			#lscale {
 				border-top: 1px solid lightgray;
 				/* padding-top: 20px; */
 				/* margin-top: 20px; */
 				/* padding-top: 3%; */
-				margin-top: 3%;
+				margin-top: 2%;
+				padding-top: 2%;
 				width: 100%;
 			}
-
-
 		</style>
   <template>
 
@@ -118,7 +118,9 @@
 		  </div>
 		</div>
 		<template is="dom-if" if="{{qualityScale}}">
-		  <leaf-scale id="scale" leafcount="{{leafCount}}" level="{{computeQuality(quality)}}" style$="{{_compute_dim(width,qualityScale)}}"></leaf-scale>
+		  <div id="lscale">
+			<leaf-scale id="scale" leafcount="{{leafCount}}" level="{{computeQuality(quality)}}" style$="{{_compute_dim(width,qualityScale)}}"></leaf-scale>
+		  </div>
 		</template>
 	  </div>
 	</template>
