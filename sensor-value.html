@@ -1,6 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../sensor-base/sensor-base.html">
 <link rel="import" href="../leaf-scale/leaf-scale.html">
+<link rel="import" href="icons.html">
 
 <dom-module id="sensor-value">
   <style>
@@ -154,10 +155,6 @@
 	Polymer({
 		is: 'sensor-value',
 		properties: {
-			name: {
-				value: "sensor-value",
-				notify: true
-			},
 			icon: {
 				value: null,
 				notify: true
@@ -211,15 +208,17 @@
 		_computeStyle: function (icon, name) {
 			if(!icon && !name)
 				return null;
-			return 'background-image: url(\'bower_components/sensor-value/icons/' + (icon ? icon : name) + '.png\')';
+			var iconName = icon || ICONS[name.toLowerCase()] || name;
+			return 'background-image: url(\'bower_components/sensor-value/icons/'+iconName+'.png\')';
 		},
 		_computeSrc: function (icon, name) {
 			if(!icon && !name)
 				return null;
-			return 'bower_components/sensor-value/icons/'+(icon ? icon : name)+'Big.png';
+			var iconName = (icon && icon+"Big") || ICONS[name.toLowerCase()+"Big"] || name+"Big";
+			return 'bower_components/sensor-value/icons/'+iconName+'.png';
 		},
 		_compute_dim(width,qualityScale) {
 			return (width? "width: "+width+"; " :"")+"height: "+(qualityScale? "90%;" : "90%;");
-		},
+		}
 	});
 </script>
