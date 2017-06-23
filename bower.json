@@ -17,6 +17,6 @@
   ],
   "dependencies": {
     "diya-sdk": "partnering/diya-sdk#master",
-    "sensor-base": "partnering/sensor-base#master"
+    "sensor-base": "partnering/sensor-base#1.0.0"
   }
 }
