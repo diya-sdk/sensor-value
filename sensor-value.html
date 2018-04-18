@@ -5,6 +5,7 @@
 
 <dom-module id="sensor-value">
   <style>
+
 	:host{
 		display: flex;
 		flex-direction: row;
@@ -37,7 +38,6 @@
 		text-align: center;
 		background-repeat: no-repeat;
 		background-position: center;
-
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -67,13 +67,14 @@
 
 	#value h1{
 		margin-top: 0px;
-		margin-bottom: 0px;
+    margin-bottom:  var(--margin-bottom, 0px);
 		overflow: hidden;
 		max-height: 30%;
 	}
 
 	#value p{
 		/*margin: 5px;*/
+    line-height: var(--line-height);
 		margin-top: 0px;
 		margin-bottom: 0px;
 		font-size: 1em;
@@ -88,12 +89,7 @@
 		margin-top: 3%;
 		padding-top: 0%;
 		justify-content: center;
-		align-self: center;  leaf-scale {
-    --img-width: var(--leaf-width);
-    --img-padleft: var(--leaf-padleft);
-    --img-padright: var(--leaf-padright);
-  }
-
+		align-self: center;
 	}
 
 	#big{
@@ -127,6 +123,33 @@
 		padding-top: 2%;
 		width: 100%;
 	}
+  @media screen and (max-width: 615px) {
+    :host{
+      font-size: 1em;
+    }
+    #value p {
+  		/*margin: 5px;*/
+      line-height: 0em;
+    }
+    #value h1 {
+      margin-bottom: 0px;
+    }
+  }
+
+  @media screen and (min-width: 615px) {
+    :host{
+      font-size: var(--font-size, 1em);
+    }
+    #value p {
+  		/*margin: 5px;*/
+      line-height: var(--line-height, 0em);
+    }
+    #value h1 {
+      margin-bottom:  var(--margin-bottom, 0px);
+    }
+  }
+
+
   </style>
   <template>
 
