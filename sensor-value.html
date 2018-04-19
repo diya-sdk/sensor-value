@@ -10,18 +10,17 @@
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		text-align: var(--text-align);
+		text-align: var(--sensor-value-text-align);
 		justify-content: space-between;
-		font-size: var(--font-size, 1.7em);
 		overflow: hidden;
 		width: 100%;
 		height: 100%;
 	}
 
 	leaf-scale {
-		--img-width: var(--leaf-width);
-		--img-padleft: var(--leaf-padleft);
-		--img-padright: var(--leaf-padright);
+		--leaf-img-width: var(--sensor-value-leaf-img-width);
+		--leaf-img-padleft: var(--sensor-value-leaf-img-padleft);
+		--leaf-img-padright: var(--sensor-value-leaf-img-padright);
 	}
 
 	p#minilabel{
@@ -78,7 +77,7 @@
 		margin-top: 0px;
 		margin-bottom: 0px;
 		font-size: 1em;
-		overflow: var(--custom-overflow, hidden);
+		overflow: var(--sensor-value-custom-overflow, hidden);
 		max-height: 20%;
 	}
 
@@ -123,27 +122,27 @@
 		padding-top: 2%;
 		width: 100%;
 	}
-  @media screen and (max-width: 615px) {
+  @media screen and (max-width: 760px) {
     :host{
-      font-size: 1em;
+      font-size: var(--sensor-value-font-size-min, 1.7em);
     }
-    #value p {
-      line-height: 0em;
+		#value p {
+      line-height: var(--sensor-value-line-height-min, 0em);
     }
     #value h1 {
-      margin-bottom: 0px;
+      margin-bottom: var(--sensor-value-margin-bottom-min, 0px);
     }
   }
 
-  @media screen and (min-width: 615px) {
+  @media screen and (min-width: 760px) {
     :host{
-      font-size: var(--font-size, 1em);
+      font-size: var(--sensor-value-font-size-max, 1.7em);
     }
     #value p {
-      line-height: var(--line-height, 0em);
+      line-height: var(--sensor-value-line-height-max, 0em);
     }
     #value h1 {
-      margin-bottom: var(--margin-bottom, 0px);
+      margin-bottom: var(--sensor-value-margin-bottom-max, 0px);
     }
   }
 
