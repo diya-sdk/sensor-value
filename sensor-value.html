@@ -1,7 +1,8 @@
-link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../sensor-base/sensor-base.html">
 <link rel="import" href="../leaf-scale/leaf-scale.html">
 <link rel="import" href="icons.html">
+<link rel="import" href="icons_new.html">
 
 <dom-module id="sensor-value">
   <style>
@@ -48,7 +49,7 @@ link rel="import" href="../polymer/polymer.html">
 		flex-direction: column;
 		color: white;
 		text-shadow: 1px 1px #000;
-		max-width: var(--sensor-value-valueid-max-width: 65%);
+		max-width: var(--sensor-value-valueid-max-width, 65%);
 		max-height: 100%;
 		width: 100%;
 		height: var(--sensor-value-valueid-height, 100%);
@@ -157,41 +158,43 @@ link rel="import" href="../polymer/polymer.html">
   		</div>
   	</template>
 
-	<template is="dom-if" if="{{mini}}">
-	  <p id="minilabel">{{label}}</p>
-	  <div id="minivalue" style$="{{_computeStyle(icon, name)}}">
-		<p><span>{{value}}</span> <span>{{unit}}</span></p><p>
-		</p>
-	  </div>
-	  <template is="dom-if" if="{{qualityScale}}">
-		<leaf-scale id="scale" leafcount="{{leafCount}}" level="{{computeQuality(quality)}}">
-		</leaf-scale>
-	  </template>
-	</template>
-
-	<template is="dom-if" if="{{!mini}}">
-	  <div id="big">
-		<div id="sensor" style$="{{_compute_dim(width,qualityScale)}}">
-		  <img id="icon" src$="{{_computeSrc(icon, name)}}">
-		  <div id="value">
-			<h1>{{label}}</h1>
-
-			<template is="dom-if" if="{{!hideValue}}">
-			  <p><span>{{value}}</span> <span>{{unit}}</span></p>
-			</template>
-			<template is="dom-if" if="{{qualityScaleBig}}">
-			  <div id="lscale">
-				<leaf-scale id="scale" leaf-count="{{leafCount}}" level="{{computeQuality(quality)}}" ></leaf-scale>
-				<!-- style$="{{_compute_dim(width,qualityScale)}}" -->
-			  </div>
-			</template>
+	<template is="dom-if" if="{{!isUsingNewIcons}}">
+		<template is="dom-if" if="{{mini}}">
+		  <p id="minilabel">{{label}}</p>
+		  <div id="minivalue" style$="{{_computeStyle(icon, name)}}">
+			<p><span>{{value}}</span> <span>{{unit}}</span></p><p>
+			</p>
 		  </div>
+		  <template is="dom-if" if="{{qualityScale}}">
+			<leaf-scale id="scale" leafcount="{{leafCount}}" level="{{computeQuality(quality)}}">
+			</leaf-scale>
+		  </template>
+		</template>
 
-		</div>
-	  </div>
+		<template is="dom-if" if="{{!mini}}">
+		  <div id="big">
+			<div id="sensor" style$="{{_compute_dim(width,qualityScale)}}">
+			  <img id="icon" src$="{{_computeSrc(icon, name)}}">
+			  <div id="value">
+				<h1>{{label}}</h1>
+
+				<template is="dom-if" if="{{!hideValue}}">
+				  <p><span>{{value}}</span> <span>{{unit}}</span></p>
+				</template>
+				<template is="dom-if" if="{{qualityScaleBig}}">
+				  <div id="lscale">
+					<leaf-scale id="scale" leaf-count="{{leafCount}}" level="{{computeQuality(quality)}}" ></leaf-scale>
+					<!-- style$="{{_compute_dim(width,qualityScale)}}" -->
+				  </div>
+				</template>
+			  </div>
+
+			</div>
+		  </div>
+		</template>
+
 	</template>
-
-  </template>
+</template>
 </dom-module>
 <script>
 	Polymer({
@@ -235,6 +238,16 @@ link rel="import" href="../polymer/polymer.html">
 				type: String,
 				value: "",
 				notify: true
+			},
+			isUsingNewIcons: {
+				type: Boolean,
+				value: true,
+				notify: true
+			},
+			sensorSizeIcon: {
+				type: String,
+				value: null,
+				notify: true
 			}
 		},
 		behaviors:[DiyaBehaviors.SensorBase],
@@ -242,6 +255,9 @@ link rel="import" href="../polymer/polymer.html">
 			var scale = Polymer.dom(this.shadowRoot).querySelector('leaf-scale');
 			if (scale) {
 				scale.setLevel(this.leafCount);
+			}
+			if (this.sensorSizeIcon === null) {
+				this.isUsingNewIcons = false;
 			}
 		},
 		computeQuality: function (quality) {
