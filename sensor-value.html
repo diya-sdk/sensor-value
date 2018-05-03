@@ -278,6 +278,8 @@
 		_computeImg: function (icon, name, size) {
 	  		if(!icon && !name)
 	  			return null;
+			if (size != "150" || size != "320" || size != "1365")
+				size = "320";
 	  		var iconName = (icon && icon+"_"+size) || ICONSNEW[name.toLowerCase()]+"_"+size || name+"_"+size;
 	  		return 'bower_components/sensor-value/icons/'+iconName+'.png';
 	  	},
