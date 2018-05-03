@@ -1,11 +1,10 @@
-<link rel="import" href="../polymer/polymer.html">
+link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../sensor-base/sensor-base.html">
 <link rel="import" href="../leaf-scale/leaf-scale.html">
 <link rel="import" href="icons.html">
 
 <dom-module id="sensor-value">
   <style>
-
 	:host{
 		display: flex;
 		flex-direction: row;
@@ -16,13 +15,11 @@
 		width: 100%;
 		height: 100%;
 	}
-
 	leaf-scale {
 		--leaf-img-width: var(--sensor-value-leaf-img-width);
 		--leaf-img-padleft: var(--sensor-value-leaf-img-padleft);
 		--leaf-img-padright: var(--sensor-value-leaf-img-padright);
 	}
-
 	p#minilabel{
 		margin: 0px;
 		margin-bottom: 20px;
@@ -30,7 +27,6 @@
 		color: white;
 		text-shadow: 2px 2px 10px #555555;
 	}
-
 	div#minivalue{
 		width: 150px;
 		height: 110px;
@@ -43,34 +39,29 @@
 		color: white;
 		text-shadow: 1px 1px #000;
 	}
-
 	#icon{
 		display: block;
 		width: var(--sensor-value-icon-width, 40%);
 	}
-
 	#value{
 		display: flex;
 		flex-direction: column;
 		color: white;
 		text-shadow: 1px 1px #000;
-		max-width: 65%;
+		max-width: var(--sensor-value-valueid-max-width: 65%);
 		max-height: 100%;
 		width: 100%;
 		height: var(--sensor-value-valueid-height, 100%);
 	}
-
 	h1 {
 		display: var(--sensor-value-custom-display);
 	}
-
 	#value h1{
 		margin-top: 0px;
 		margin-bottom:  var(--sensor-value-margin-bottom, 0px);
 		overflow: hidden;
 		max-height: 30%;
 	}
-
 	#value p{
 		/*margin: 5px;*/
 		line-height: var(--sensor-value-line-height);
@@ -80,7 +71,6 @@
 		overflow: var(--sensor-value-custom-overflow, hidden);
 		max-height: 20%;
 	}
-
 	#value #lscale{
 		display: flex;
 		height: 60%;
@@ -90,7 +80,6 @@
 		justify-content: center;
 		align-self: center;
 	}
-
 	#big{
 		display: flex;
 		flex-direction: column;
@@ -99,13 +88,11 @@
 		height: 100%;
 		width: 100%;
 	}
-
 	#big leaf-scale{
 		height: 100%;
 		max-height: 100%;
 		width: auto;
 	}
-
 	#sensor{
 		display: flex;
 		align-items: center;
@@ -122,7 +109,7 @@
 		padding-top: 2%;
 		width: 100%;
 	}
-	@media screen and (max-width: 760px) {
+	@media all and (max-width: 760px) {
 		:host{
 			font-size: var(--sensor-value-font-size-min, 1.7em);
 		}
@@ -134,7 +121,7 @@
 		}
 	}
 
-	@media screen and (min-width: 760px) {
+	@media all and (min-width: 760px) {
 		:host{
 			font-size: var(--sensor-value-font-size-max, 1.7em);
 		}
@@ -145,10 +132,30 @@
 			margin-bottom: var(--sensor-value-margin-bottom-max, 0px);
 		}
 	}
-
-
   </style>
   <template>
+
+	  <template is="dom-if" if="{{isUsingNewIcons}}">
+  		<div id="big">
+  			<div id="sensor" style$="{{_compute_dim(width,qualityScale)}}">
+  				<img id="icon" src$="{{_computeImg(icon, name, sensorSizeIcon)}}">
+  				<div id="value">
+  					<h1>{{label}}</h1>
+
+  					<template is="dom-if" if="{{!hideValue}}">
+  						<p><span>{{value}}</span> <span>{{unit}}</span></p>
+  					</template>
+  					<template is="dom-if" if="{{qualityScaleBig}}">
+  						<div id="lscale">
+  							<leaf-scale id="scale" leaf-count="{{leafCount}}" level="{{computeQuality(quality)}}" ></leaf-scale>
+  							<!-- style$="{{_compute_dim(width,qualityScale)}}" -->
+  						</div>
+  					</template>
+  				</div>
+
+  			</div>
+  		</div>
+  	</template>
 
 	<template is="dom-if" if="{{mini}}">
 	  <p id="minilabel">{{label}}</p>
@@ -252,6 +259,12 @@
 			var iconName = (icon && icon+"Big") || ICONS[name.toLowerCase()+"Big"] || name+"Big";
 			return 'bower_components/sensor-value/icons/'+iconName+'.png';
 		},
+		_computeImg: function (icon, name, size) {
+	  		if(!icon && !name)
+	  			return null;
+	  		var iconName = (icon && icon+"_"+size) || ICONSNEW[name.toLowerCase()]+"_"+size || name+"_"+size;
+	  		return 'bower_components/sensor-value/icons/'+iconName+'.png';
+	  	},
 		_compute_dim(width,qualityScale) {
 			return (width? "width: "+width+"; " :"")+"height: "+(qualityScale? "90%;" : "90%;");
 		}
