@@ -120,6 +120,11 @@
 		#value h1 {
 			margin-bottom: var(--sensor-value-margin-bottom-min, 0px);
 		}
+		leaf-scale {
+			--leaf-img-width: var(--sensor-value-leaf-img-width);
+			--leaf-img-padleft: var(--sensor-value-leaf-img-padleft);
+			--leaf-img-padright: var(--sensor-value-leaf-img-padright);
+		}
 	}
 
 	@media all and (min-width: 760px) {
@@ -131,6 +136,11 @@
 		}
 		#value h1 {
 			margin-bottom: var(--sensor-value-margin-bottom-max, 0px);
+		}
+		leaf-scale {
+			--leaf-img-width-big: var(--sensor-value-leaf-img-width-big);
+			--leaf-img-padleft-big: var(--sensor-value-leaf-img-padleft-big);
+			--leaf-img-padright-big: var(--sensor-value-leaf-img-padright-big);
 		}
 	}
   </style>
