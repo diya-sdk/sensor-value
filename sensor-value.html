@@ -63,7 +63,7 @@
 		margin-top: 0px;
 		margin-bottom:  var(--sensor-value-margin-bottom, 0px);
 		overflow: hidden;
-		max-height: 30%;
+		max-height: var(--sensor-value-h1-max-height, 30%);
 	}
 	#value p{
 		/*margin: 5px;*/
@@ -121,6 +121,7 @@
 		}
 		#value h1 {
 			margin-bottom: var(--sensor-value-margin-bottom-min, 0px);
+			height: var(--sensor-value-h1-height-min);
 		}
 		leaf-scale {
 			--leaf-img-width: var(--sensor-value-leaf-img-width);
@@ -138,6 +139,7 @@
 		}
 		#value h1 {
 			margin-bottom: var(--sensor-value-margin-bottom-max, 0px);
+			height: var(--sensor-value-h1-height-max);
 		}
 		leaf-scale {
 			--leaf-img-width-big: var(--sensor-value-leaf-img-width-big);
