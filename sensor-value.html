@@ -43,6 +43,7 @@
 	#icon{
 		display: block;
 		width: var(--sensor-value-icon-width, 40%);
+		margin-left: var(--sensor-value-icon-margin-left);
 	}
 	#value{
 		display: flex;
@@ -76,7 +77,7 @@
 		display: flex;
 		height: 60%;
 		width: 100%;
-		margin-top: 3%;
+		margin-top: var(--sensor-value-lscale-margin-top, 3%);
 		padding-top: 0%;
 		justify-content: center;
 		align-self: center;
@@ -106,7 +107,7 @@
 		/* padding-top: 20px; */
 		/* margin-top: 20px; */
 		/* padding-top: 3%; */
-		margin-top: 2%;
+		margin-top: var(--sensor-value-lscale-margin-top, 2%);
 		padding-top: 2%;
 		width: 100%;
 	}
