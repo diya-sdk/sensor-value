@@ -54,6 +54,7 @@
 		max-height: 100%;
 		width: 100%;
 		height: var(--sensor-value-valueid-height, 100%);
+		margin-top: var(--sensor-value-value-margin-top);
 	}
 	h1 {
 		display: var(--sensor-value-custom-display);
@@ -69,7 +70,8 @@
 		line-height: var(--sensor-value-line-height);
 		margin-top: 0px;
 		margin-bottom: 0px;
-		font-size: 1em;
+		font-size: var(--sensor-value-p-font-size, 1em);
+		font-weight: var(--sensor-value-p-font-weight);
 		overflow: var(--sensor-value-custom-overflow, hidden);
 		max-height: 20%;
 	}
