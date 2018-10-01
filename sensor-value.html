@@ -113,7 +113,7 @@
 		padding-top: 2%;
 		width: 100%;
 	}
-	@media all and (max-width: 760px) {
+	@media all and (max-width: 760px), all and (max-height: 811px){
 		:host{
 			font-size: var(--sensor-value-font-size-min, 1.7em);
 		}
@@ -130,7 +130,7 @@
 		}
 	}
 
-	@media all and (min-width: 760px) {
+	@media all and (min-width: 760px) and (min-height: 811px){
 		:host{
 			font-size: var(--sensor-value-font-size-max, 1.7em);
 		}
